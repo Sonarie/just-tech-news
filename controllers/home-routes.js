@@ -32,12 +32,21 @@ router.get("/", (req, res) => {
     .then((dbPostData) => {
       // pass a single post object into the homepage template
       console.log(dbPostData[0]);
-      res.render('homepage', { posts });
+      res.render("homepage", { posts });
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+router.get("/login", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+
+  res.render("login");
 });
 
 const sequelize = require("../config/connection");
